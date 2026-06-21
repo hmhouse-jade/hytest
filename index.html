@@ -1,265 +1,1788 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
+
 <meta charset="UTF-8">
-<title>감정 반응속도 실험</title>
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+감정 반응속도 실험
+</title>
 
 <style>
+
 body{
-    font-family: Arial;
-    text-align:center;
-    margin-top:50px;
+
+margin:0;
+padding:0;
+
+background:#f4f4f4;
+
+font-family:
+Arial,
+sans-serif;
+
+text-align:center;
+
 }
 
-#stimulus{
-    font-size:50px;
-    margin:80px;
+.screen{
+
+display:none;
+
+padding:20px;
+
+min-height:100vh;
+
+box-sizing:border-box;
+
 }
 
-.category{
-    position:absolute;
-    top:20px;
-    font-size:24px;
-    font-weight:bold;
+.active{
+
+display:block;
+
 }
 
-#left{
-    left:50px;
-}
+h1{
 
-#right{
-    right:50px;
-}
+margin-top:20px;
 
-#message{
-    color:red;
-    font-size:25px;
 }
 
 button{
-    padding:10px 20px;
-    font-size:18px;
+
+border:none;
+
+border-radius:10px;
+
+cursor:pointer;
+
 }
+
+.mainButton{
+
+padding:15px 30px;
+
+font-size:18px;
+
+}
+
+input{
+
+width:80%;
+
+max-width:400px;
+
+padding:12px;
+
+font-size:18px;
+
+}
+
+select{
+
+width:80%;
+
+max-width:400px;
+
+padding:12px;
+
+font-size:18px;
+
+}
+
+.instructions{
+
+max-width:800px;
+
+margin:auto;
+
+text-align:left;
+
+font-size:20px;
+
+line-height:1.8;
+
+}
+
+.categoryBar{
+
+display:flex;
+
+justify-content:space-between;
+
+padding:10px 20px;
+
+font-size:22px;
+
+font-weight:bold;
+
+}
+
+#stimulusArea{
+
+height:350px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+flex-direction:column;
+
+}
+
+#fixation{
+
+font-size:80px;
+
+}
+
+#stimulusText{
+
+font-size:50px;
+
+font-weight:bold;
+
+}
+
+#stimulusImage{
+
+max-width:90%;
+
+max-height:300px;
+
+}
+
+.responseArea{
+
+position:fixed;
+
+bottom:15px;
+
+left:0;
+
+right:0;
+
+display:flex;
+
+justify-content:center;
+
+gap:15px;
+
+}
+
+.responseBtn{
+
+width:40%;
+
+height:90px;
+
+font-size:24px;
+
+color:white;
+
+}
+
+.leftBtn{
+
+background:#4CAF50;
+
+}
+
+.rightBtn{
+
+background:#F44336;
+
+}
+
+#message{
+
+font-size:24px;
+
+color:red;
+
+margin-top:15px;
+
+}
+
 </style>
+
 </head>
 
 <body>
 
-<h1>감정 반응속도 실험</h1>
 
-<div id="left" class="category"></div>
-<div id="right" class="category"></div>
+<!-- 시작 화면 -->
 
-<div id="stimulus"></div>
+<div
+id="startScreen"
+class="screen active">
 
-<div id="message"></div>
+<h1>
 
-<button onclick="startExperiment()">실험 시작</button>
+감정 반응속도 실험
+
+</h1>
+
+<p>
+
+참가자 번호를 입력해주세요.
+
+</p>
+
+<input
+id="participantID"
+placeholder="참가자 번호">
+
+<br><br>
+
+<button
+id="startBtn"
+class="mainButton">
+
+참여하기
+
+</button>
+
+</div>
+
+
+<!-- 주의사항 -->
+
+<div
+id="noticeScreen"
+class="screen">
+
+<h1>
+
+실험 안내
+
+</h1>
+
+<div class="instructions">
+
+<p>
+
+이는 반응속도 비교를 위한 실험이며
+오류를 줄이기 위해
+최대한 정확하고 빠르게
+반응해주시기를 바랍니다.
+
+</p>
+
+<p>
+
+실험 순서
+
+</p>
+
+<ol>
+
+<li>
+연습 단계
+</li>
+
+<li>
+본실험 1
+</li>
+
+<li>
+본실험 2
+</li>
+
+<li>
+설문
+</li>
+
+</ol>
+
+</div>
+
+<br>
+
+<button
+id="noticeBtn"
+class="mainButton">
+
+이해했습니다
+
+</button>
+
+</div>
+
+
+<!-- 단계 안내 -->
+
+<div
+id="instructionScreen"
+class="screen">
+
+<h1
+id="instructionTitle">
+
+단계 안내
+
+</h1>
+
+<div
+class="instructions">
+
+<p
+id="instructionText">
+
+</p>
+
+</div>
+
+<br>
+
+<button
+id="instructionBtn"
+class="mainButton">
+
+실험 시작
+
+</button>
+
+</div>
+
+
+<!-- 실험 화면 -->
+
+<div
+id="experimentScreen"
+class="screen">
+
+<div
+class="categoryBar">
+
+<div
+id="leftCategory">
+
+왼쪽
+
+</div>
+
+<div
+id="rightCategory">
+
+오른쪽
+
+</div>
+
+</div>
+
+<div
+id="stimulusArea">
+
+<div
+id="fixation">
+
++
+
+</div>
+
+<div
+id="stimulusText"
+style="display:none;">
+
+</div>
+
+<img
+id="stimulusImage"
+style="display:none;">
+
+<div
+id="message">
+
+</div>
+
+</div>
+
+<div
+class="responseArea">
+
+<button
+
+id="leftButton"
+
+class="
+responseBtn
+leftBtn">
+
+왼쪽
+
+</button>
+
+<button
+
+id="rightButton"
+
+class="
+responseBtn
+rightBtn">
+
+오른쪽
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- 설문 화면 -->
+
+<div
+id="surveyScreen"
+class="screen">
+
+<h1>
+
+마지막 설문
+
+</h1>
+
+<p>
+
+당신의 평소 성격은 밝은 편인가요?
+
+</p>
+
+<select id="personality">
+
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+
+</select>
+
+<br><br>
+
+<p>
+
+당신의 현재 감정은 긍정적인가요?
+
+</p>
+
+<select id="currentEmotion">
+
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+
+</select>
+
+<br><br>
+
+<p>
+
+최근 기억에 남는 일이 있었다면
+좋은 일이었나요?
+
+</p>
+
+<select id="recentMemory">
+
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+
+</select>
+
+<br><br>
+
+<button
+id="surveySubmitBtn"
+class="mainButton">
+
+설문 제출
+
+</button>
+
+</div>
+
+
+<!-- 결과 화면 -->
+
+<div
+id="resultScreen"
+class="screen">
+
+<h1>
+
+실험 종료
+
+</h1>
+
+<div
+id="resultBox">
+
+</div>
+
+<br>
+
+<button
+id="downloadBtn"
+class="mainButton">
+
+CSV 다운로드
+
+</button>
+
+</div>
+
 
 <script>
+/* ==========================
+   전역 변수
+========================== */
 
-const blocks = [
+let participantID="";
+
+let currentBlockIndex=0;
+let currentTrialIndex=0;
+
+let currentBlock=null;
+let currentStimulus=null;
+
+let stimulusVisible=false;
+
+let startTime=0;
+
+let errorCount=0;
+
+let results=[];
+
+
+/* ==========================
+   단어 자극
+========================== */
+
+const positiveWords=[
+
+"행복","기쁨","사랑","희망","성공",
+"감사","웃음","만족","즐거움","평온",
+
+"설렘","배려","응원","우정","행운",
+"안정","성취","따뜻함","자신감","편안함"
+
+];
+
+const negativeWords=[
+
+"슬픔","분노","공포","불안","실패",
+"좌절","스트레스","걱정","외로움","우울",
+
+"후회","긴장","상실","절망","불신",
+"혼란","고통","위협","짜증","두려움"
+
+];
+
+
+/* ==========================
+   사진 자극
+========================== */
+
+/*
+
+images 폴더 생성 후
+
+happy1.jpg ~ happy20.jpg
+sad1.jpg ~ sad20.jpg
+
+저장
+
+*/
+
+const positiveImages=[];
+
+for(let i=1;i<=20;i++){
+
+positiveImages.push(
+`images/happy${i}.jpg`
+);
+
+}
+
+const negativeImages=[];
+
+for(let i=1;i<=20;i++){
+
+negativeImages.push(
+`images/sad${i}.jpg`
+);
+
+}
+
+
+/* ==========================
+   셔플 함수
+========================== */
+
+function shuffle(array){
+
+for(
+
+let i=array.length-1;
+
+i>0;
+
+i--
+
+){
+
+const j=Math.floor(
+Math.random()*(i+1)
+);
+
+[array[i],array[j]]
+=
+[array[j],array[i]];
+
+}
+
+return array;
+
+}
+
+
+/* ==========================
+   연습 블록
+========================== */
+
+const practiceBlock={
+
+name:"연습",
+
+leftLabel:"자음",
+
+rightLabel:"모음",
+
+trials:[
 
 {
-name:"자음/모음",
-left:"자음",
-right:"모음",
-
-items:[
-{text:"ㄱ",correct:"left"},
-{text:"ㄴ",correct:"left"},
-{text:"ㄷ",correct:"left"},
-{text:"ㄹ",correct:"left"},
-{text:"ㅁ",correct:"left"},
-
-{text:"ㅏ",correct:"right"},
-{text:"ㅓ",correct:"right"},
-{text:"ㅗ",correct:"right"},
-{text:"ㅜ",correct:"right"},
-{text:"ㅣ",correct:"right"}
-]
+type:"text",
+content:"ㄱ",
+correct:"left"
 },
 
 {
-name:"긍정 왼쪽 / 부정 오른쪽",
-left:"긍정",
-right:"부정",
-
-items:[
-{text:"행복",correct:"left"},
-{text:"기쁨",correct:"left"},
-{text:"사랑",correct:"left"},
-{text:"성공",correct:"left"},
-{text:"희망",correct:"left"},
-
-{text:"슬픔",correct:"right"},
-{text:"분노",correct:"right"},
-{text:"실패",correct:"right"},
-{text:"공포",correct:"right"},
-{text:"불안",correct:"right"}
-]
+type:"text",
+content:"ㄴ",
+correct:"left"
 },
 
 {
-name:"부정 왼쪽 / 긍정 오른쪽",
-left:"부정",
-right:"긍정",
+type:"text",
+content:"ㄷ",
+correct:"left"
+},
 
-items:[
-{text:"슬픔",correct:"left"},
-{text:"분노",correct:"left"},
-{text:"실패",correct:"left"},
-{text:"공포",correct:"left"},
-{text:"불안",correct:"left"},
+{
+type:"text",
+content:"ㄹ",
+correct:"left"
+},
 
-{text:"행복",correct:"right"},
-{text:"기쁨",correct:"right"},
-{text:"사랑",correct:"right"},
-{text:"성공",correct:"right"},
-{text:"희망",correct:"right"}
+{
+type:"text",
+content:"ㅏ",
+correct:"right"
+},
+
+{
+type:"text",
+content:"ㅓ",
+correct:"right"
+},
+
+{
+type:"text",
+content:"ㅗ",
+correct:"right"
+},
+
+{
+type:"text",
+content:"ㅣ",
+correct:"right"
+}
+
 ]
+
+};
+
+
+/* ==========================
+   블록 생성
+========================== */
+
+function createBlocks(){
+
+const block1Trials=[];
+
+const block2Trials=[];
+
+
+/* 본실험1
+   긍정 왼쪽
+*/
+
+positiveWords.forEach(word=>{
+
+block1Trials.push({
+
+type:"text",
+
+content:word,
+
+correct:"left"
+
+});
+
+});
+
+negativeWords.forEach(word=>{
+
+block1Trials.push({
+
+type:"text",
+
+content:word,
+
+correct:"right"
+
+});
+
+});
+
+positiveImages.forEach(img=>{
+
+block1Trials.push({
+
+type:"image",
+
+content:img,
+
+correct:"left"
+
+});
+
+});
+
+negativeImages.forEach(img=>{
+
+block1Trials.push({
+
+type:"image",
+
+content:img,
+
+correct:"right"
+
+});
+
+});
+
+
+/* 본실험2
+   부정 왼쪽
+*/
+
+positiveWords.forEach(word=>{
+
+block2Trials.push({
+
+type:"text",
+
+content:word,
+
+correct:"right"
+
+});
+
+});
+
+negativeWords.forEach(word=>{
+
+block2Trials.push({
+
+type:"text",
+
+content:word,
+
+correct:"left"
+
+});
+
+});
+
+positiveImages.forEach(img=>{
+
+block2Trials.push({
+
+type:"image",
+
+content:img,
+
+correct:"right"
+
+});
+
+});
+
+negativeImages.forEach(img=>{
+
+block2Trials.push({
+
+type:"image",
+
+content:img,
+
+correct:"left"
+
+});
+
+});
+
+
+shuffle(block1Trials);
+shuffle(block2Trials);
+
+
+return [
+
+practiceBlock,
+
+{
+
+name:"본실험 1",
+
+leftLabel:"긍정",
+
+rightLabel:"부정",
+
+trials:block1Trials
+
+},
+
+{
+
+name:"본실험 2",
+
+leftLabel:"부정",
+
+rightLabel:"긍정",
+
+trials:block2Trials
+
 }
 
 ];
 
-let currentBlock = 0;
-let currentItem = 0;
-let startTime = 0;
-
-let results = [];
-
-function shuffle(array){
-    return array.sort(()=>Math.random()-0.5);
 }
 
-blocks.forEach(block=>{
-    block.items = shuffle(block.items);
+const blocks=
+createBlocks();
+
+
+/* ==========================
+   화면 전환
+========================== */
+
+function showScreen(id){
+
+document
+
+.querySelectorAll(".screen")
+
+.forEach(screen=>{
+
+screen.classList.remove(
+"active"
+);
+
 });
 
-function startExperiment(){
+document
 
-    document.querySelector("button").style.display="none";
+.getElementById(id)
 
-    currentBlock=0;
-    currentItem=0;
+.classList.add(
+"active"
+);
 
-    showItem();
+}
+/* ==========================
+   시작 버튼
+========================== */
+
+document
+.getElementById("startBtn")
+.addEventListener("click",()=>{
+
+participantID=
+document
+.getElementById("participantID")
+.value
+.trim();
+
+if(participantID===""){
+
+alert("참가자 번호를 입력해주세요.");
+
+return;
+
 }
 
-function showItem(){
-
-    if(currentBlock >= blocks.length){
-
-        finishExperiment();
-        return;
-    }
-
-    let block = blocks[currentBlock];
-
-    if(currentItem >= block.items.length){
-
-        currentBlock++;
-        currentItem=0;
-
-        showItem();
-        return;
-    }
-
-    document.getElementById("left").innerText =
-        "E : " + block.left;
-
-    document.getElementById("right").innerText =
-        "I : " + block.right;
-
-    document.getElementById("message").innerText="";
-
-    let item = block.items[currentItem];
-
-    document.getElementById("stimulus").innerText =
-        item.text;
-
-    startTime = performance.now();
-}
-
-document.addEventListener("keydown",function(event){
-
-    if(currentBlock >= blocks.length) return;
-
-    let item =
-    blocks[currentBlock].items[currentItem];
-
-    let response = "";
-
-    if(event.key==="e")
-        response="left";
-
-    if(event.key==="i")
-        response="right";
-
-    if(response==="") return;
-
-    let reactionTime =
-    performance.now()-startTime;
-
-    let correct =
-    (response===item.correct);
-
-    results.push({
-        block:blocks[currentBlock].name,
-        stimulus:item.text,
-        response:response,
-        correct:correct,
-        reactionTime:
-        Math.round(reactionTime)
-    });
-
-    if(correct){
-
-        currentItem++;
-        showItem();
-
-    }else{
-
-        document.getElementById("message")
-        .innerText="오답!";
-
-    }
+showScreen("noticeScreen");
 
 });
+
+
+/* ==========================
+   주의사항 확인
+========================== */
+
+document
+.getElementById("noticeBtn")
+.addEventListener("click",()=>{
+
+showInstruction();
+
+});
+
+
+/* ==========================
+   단계 설명
+========================== */
+
+function showInstruction(){
+
+currentBlock=
+blocks[currentBlockIndex];
+
+const title=
+document.getElementById(
+"instructionTitle"
+);
+
+const text=
+document.getElementById(
+"instructionText"
+);
+
+title.textContent=
+currentBlock.name;
+
+if(currentBlock.name==="연습"){
+
+text.innerHTML=`
+
+연습 단계입니다.
+
+<br><br>
+
+자음 → 왼쪽 버튼
+
+<br>
+
+모음 → 오른쪽 버튼
+
+<br><br>
+
+준비가 되면
+실험 시작 버튼을 눌러주세요.
+
+`;
+
+}
+
+else if(
+currentBlock.name==="본실험 1"
+){
+
+text.innerHTML=`
+
+본실험 1단계입니다.
+
+<br><br>
+
+긍정 자극 →
+왼쪽
+
+<br>
+
+부정 자극 →
+오른쪽
+
+<br><br>
+
+준비가 되면
+실험 시작 버튼을 눌러주세요.
+
+`;
+
+}
+
+else{
+
+text.innerHTML=`
+
+본실험 2단계입니다.
+
+<br><br>
+
+부정 자극 →
+왼쪽
+
+<br>
+
+긍정 자극 →
+오른쪽
+
+<br><br>
+
+준비가 되면
+실험 시작 버튼을 눌러주세요.
+
+`;
+
+}
+
+showScreen(
+"instructionScreen"
+);
+
+}
+
+
+/* ==========================
+   실험 시작
+========================== */
+
+document
+.getElementById("instructionBtn")
+.addEventListener("click",()=>{
+
+currentTrialIndex=0;
+
+startTrial();
+
+});
+
+
+/* ==========================
+   시행 시작
+========================== */
+
+function startTrial(){
+
+if(
+
+currentTrialIndex
+
+>=
+
+currentBlock.trials.length
+
+){
+
+finishBlock();
+
+return;
+
+}
+
+currentStimulus=
+
+currentBlock.trials[
+currentTrialIndex
+];
+
+showScreen(
+"experimentScreen"
+);
+
+document
+.getElementById(
+"leftCategory"
+)
+.textContent=
+currentBlock.leftLabel;
+
+document
+.getElementById(
+"rightCategory"
+)
+.textContent=
+currentBlock.rightLabel;
+
+document
+.getElementById(
+"stimulusText"
+)
+.style.display="none";
+
+document
+.getElementById(
+"stimulusImage"
+)
+.style.display="none";
+
+document
+.getElementById(
+"fixation"
+)
+.style.display="block";
+
+document
+.getElementById(
+"message"
+)
+.textContent="";
+
+stimulusVisible=false;
+
+
+/* 랜덤 대기 */
+
+const delay=
+
+500+
+
+Math.random()*1000;
+
+setTimeout(
+
+presentStimulus,
+
+delay
+
+);
+
+}
+
+
+/* ==========================
+   자극 표시
+========================== */
+
+function presentStimulus(){
+
+stimulusVisible=true;
+
+document
+.getElementById(
+"fixation"
+)
+.style.display="none";
+
+
+if(
+currentStimulus.type==="text"
+){
+
+const textBox=
+
+document
+.getElementById(
+"stimulusText"
+);
+
+textBox.textContent=
+currentStimulus.content;
+
+textBox.style.display=
+"block";
+
+}
+
+else{
+
+const img=
+
+document
+.getElementById(
+"stimulusImage"
+);
+
+img.src=
+currentStimulus.content;
+
+img.style.display=
+"block";
+
+}
+
+startTime=
+performance.now();
+
+}
+
+
+/* ==========================
+   응답 처리
+========================== */
+
+function handleResponse(
+response
+){
+
+if(
+!stimulusVisible
+){
+return;
+}
+
+const rt=
+
+performance.now()
+
+-
+
+startTime;
+
+const correct=
+
+response===
+
+currentStimulus.correct;
+
+if(!correct){
+
+errorCount++;
+
+document
+.getElementById(
+"message"
+)
+.textContent=
+"오답!";
+
+}
+
+results.push({
+
+participantID:
+participantID,
+
+block:
+currentBlock.name,
+
+stimulus:
+currentStimulus.content,
+
+type:
+currentStimulus.type,
+
+response:
+response,
+
+correct:
+correct,
+
+reactionTime:
+Math.round(rt)
+
+});
+
+stimulusVisible=false;
+
+currentTrialIndex++;
+
+setTimeout(
+startTrial,
+300
+);
+
+}
+
+
+/* ==========================
+   버튼 응답
+========================== */
+
+document
+.getElementById(
+"leftButton"
+)
+.addEventListener(
+"click",
+()=>{
+
+handleResponse(
+"left"
+);
+
+}
+);
+
+document
+.getElementById(
+"rightButton"
+)
+.addEventListener(
+"click",
+()=>{
+
+handleResponse(
+"right"
+);
+
+}
+);
+
+
+/* ==========================
+   블록 종료
+========================== */
+
+function finishBlock(){
+
+currentBlockIndex++;
+
+if(
+
+currentBlockIndex
+
+>=
+
+blocks.length
+
+){
+
+showScreen(
+"surveyScreen"
+);
+
+return;
+
+}
+
+showInstruction();
+
+}
+/* ==========================
+   설문 제출
+========================== */
+
+document
+.getElementById("surveySubmitBtn")
+.addEventListener("click",()=>{
+
+const personality =
+document
+.getElementById("personality")
+.value;
+
+const currentEmotion =
+document
+.getElementById("currentEmotion")
+.value;
+
+const recentMemory =
+document
+.getElementById("recentMemory")
+.value;
+
+
+/* 모든 결과에 설문 저장 */
+
+results.forEach(r=>{
+
+r.personality=
+personality;
+
+r.currentEmotion=
+currentEmotion;
+
+r.recentMemory=
+recentMemory;
+
+});
+
+finishExperiment();
+
+});
+
+
+/* ==========================
+   평균 계산
+========================== */
+
+function calculateAverage(
+blockName
+){
+
+const filtered=
+
+results.filter(r=>
+
+r.block===blockName
+
+&&
+
+r.correct===true
+
+);
+
+if(
+filtered.length===0
+){
+return 0;
+}
+
+const total=
+
+filtered.reduce(
+
+(sum,r)=>
+
+sum+r.reactionTime,
+
+0
+
+);
+
+return Math.round(
+
+total/
+
+filtered.length
+
+);
+
+}
+
+
+/* ==========================
+   실험 종료
+========================== */
 
 function finishExperiment(){
 
-    document.getElementById("stimulus")
-    .innerHTML="<h2>실험 종료</h2>";
+const practiceMean=
 
-    document.getElementById("left").innerText="";
-    document.getElementById("right").innerText="";
+calculateAverage(
+"연습"
+);
 
-    let csv =
-    "block,stimulus,response,correct,reactionTime\n";
+const block1Mean=
 
-    results.forEach(r=>{
-        csv +=
-        `${r.block},${r.stimulus},${r.response},${r.correct},${r.reactionTime}\n`;
-    });
+calculateAverage(
+"본실험 1"
+);
 
-    let blob =
-    new Blob([csv], {type:"text/csv"});
+const block2Mean=
 
-    let url =
-    URL.createObjectURL(blob);
+calculateAverage(
+"본실험 2"
+);
 
-    let a =
-    document.createElement("a");
 
-    a.href=url;
-    a.download="results.csv";
-    a.innerText="결과 다운로드";
+/* 전체 평균 */
 
-    document.body.appendChild(a);
+const correctTrials=
+
+results.filter(
+r=>r.correct
+);
+
+let overallMean=0;
+
+if(
+correctTrials.length>0
+){
+
+overallMean=
+
+Math.round(
+
+correctTrials.reduce(
+
+(sum,r)=>
+
+sum+r.reactionTime,
+
+0
+
+)
+
+/
+
+correctTrials.length
+
+);
+
+}
+
+
+showScreen(
+"resultScreen"
+);
+
+
+document
+.getElementById(
+"resultBox"
+)
+.innerHTML=
+
+`
+
+<h2>
+
+참가자 번호
+
+${participantID}
+
+</h2>
+
+<p>
+
+연습 평균 반응시간
+
+<b>
+
+${practiceMean}
+
+ms
+
+</b>
+
+</p>
+
+<p>
+
+본실험1 평균 반응시간
+
+<b>
+
+${block1Mean}
+
+ms
+
+</b>
+
+</p>
+
+<p>
+
+본실험2 평균 반응시간
+
+<b>
+
+${block2Mean}
+
+ms
+
+</b>
+
+</p>
+
+<p>
+
+전체 평균 반응시간
+
+<b>
+
+${overallMean}
+
+ms
+
+</b>
+
+</p>
+
+<p>
+
+오답 수
+
+<b>
+
+${errorCount}
+
+회
+
+</b>
+
+</p>
+
+<p>
+
+총 시행 수
+
+<b>
+
+${results.length}
+
+회
+
+</b>
+
+</p>
+
+`;
+
+}
+
+
+/* ==========================
+   CSV 다운로드
+========================== */
+
+document
+.getElementById("downloadBtn")
+.addEventListener(
+"click",
+downloadCSV
+);
+
+function downloadCSV(){
+
+let csv=
+
+"ParticipantID,"
++
+
+"Block,"
++
+
+"Stimulus,"
++
+
+"Type,"
++
+
+"Response,"
++
+
+"Correct,"
++
+
+"ReactionTime,"
++
+
+"Personality,"
++
+
+"CurrentEmotion,"
++
+
+"RecentMemory\n";
+
+
+results.forEach(r=>{
+
+csv +=
+
+`${r.participantID},`
+
++
+
+`${r.block},`
+
++
+
+`${r.stimulus},`
+
++
+
+`${r.type},`
+
++
+
+`${r.response},`
+
++
+
+`${r.correct},`
+
++
+
+`${r.reactionTime},`
+
++
+
+`${r.personality},`
+
++
+
+`${r.currentEmotion},`
+
++
+
+`${r.recentMemory}\n`;
+
+});
+
+
+const blob=
+
+new Blob(
+
+[csv],
+
+{
+
+type:
+"text/csv"
+
+}
+
+);
+
+const url=
+
+URL.createObjectURL(
+blob
+);
+
+const a=
+
+document.createElement(
+"a"
+);
+
+a.href=url;
+
+a.download=
+
+`EmotionExperiment_${participantID}.csv`;
+
+document.body.appendChild(
+a
+);
+
+a.click();
+
+document.body.removeChild(
+a
+);
+
+URL.revokeObjectURL(
+url
+);
+
 }
 
 </script>
 
 </body>
+
 </html>
