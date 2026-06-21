@@ -1,19 +1,265 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>Mini App</title>
-</head>
-<body style="text-align:center; font-family:sans-serif; margin-top:50px;">
-  <h2>간단 프로그램</h2>
-  <button onclick="run()">클릭!</button>
-  <p id="out"></p>
+<meta charset="UTF-8">
+<title>감정 반응속도 실험</title>
 
-  <script>
-    function run() {
-      document.getElementById("out").innerText =
-        "실행 완료! 시간: " + new Date().toLocaleTimeString();
+<style>
+body{
+    font-family: Arial;
+    text-align:center;
+    margin-top:50px;
+}
+
+#stimulus{
+    font-size:50px;
+    margin:80px;
+}
+
+.category{
+    position:absolute;
+    top:20px;
+    font-size:24px;
+    font-weight:bold;
+}
+
+#left{
+    left:50px;
+}
+
+#right{
+    right:50px;
+}
+
+#message{
+    color:red;
+    font-size:25px;
+}
+
+button{
+    padding:10px 20px;
+    font-size:18px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>감정 반응속도 실험</h1>
+
+<div id="left" class="category"></div>
+<div id="right" class="category"></div>
+
+<div id="stimulus"></div>
+
+<div id="message"></div>
+
+<button onclick="startExperiment()">실험 시작</button>
+
+<script>
+
+const blocks = [
+
+{
+name:"자음/모음",
+left:"자음",
+right:"모음",
+
+items:[
+{text:"ㄱ",correct:"left"},
+{text:"ㄴ",correct:"left"},
+{text:"ㄷ",correct:"left"},
+{text:"ㄹ",correct:"left"},
+{text:"ㅁ",correct:"left"},
+
+{text:"ㅏ",correct:"right"},
+{text:"ㅓ",correct:"right"},
+{text:"ㅗ",correct:"right"},
+{text:"ㅜ",correct:"right"},
+{text:"ㅣ",correct:"right"}
+]
+},
+
+{
+name:"긍정 왼쪽 / 부정 오른쪽",
+left:"긍정",
+right:"부정",
+
+items:[
+{text:"행복",correct:"left"},
+{text:"기쁨",correct:"left"},
+{text:"사랑",correct:"left"},
+{text:"성공",correct:"left"},
+{text:"희망",correct:"left"},
+
+{text:"슬픔",correct:"right"},
+{text:"분노",correct:"right"},
+{text:"실패",correct:"right"},
+{text:"공포",correct:"right"},
+{text:"불안",correct:"right"}
+]
+},
+
+{
+name:"부정 왼쪽 / 긍정 오른쪽",
+left:"부정",
+right:"긍정",
+
+items:[
+{text:"슬픔",correct:"left"},
+{text:"분노",correct:"left"},
+{text:"실패",correct:"left"},
+{text:"공포",correct:"left"},
+{text:"불안",correct:"left"},
+
+{text:"행복",correct:"right"},
+{text:"기쁨",correct:"right"},
+{text:"사랑",correct:"right"},
+{text:"성공",correct:"right"},
+{text:"희망",correct:"right"}
+]
+}
+
+];
+
+let currentBlock = 0;
+let currentItem = 0;
+let startTime = 0;
+
+let results = [];
+
+function shuffle(array){
+    return array.sort(()=>Math.random()-0.5);
+}
+
+blocks.forEach(block=>{
+    block.items = shuffle(block.items);
+});
+
+function startExperiment(){
+
+    document.querySelector("button").style.display="none";
+
+    currentBlock=0;
+    currentItem=0;
+
+    showItem();
+}
+
+function showItem(){
+
+    if(currentBlock >= blocks.length){
+
+        finishExperiment();
+        return;
     }
-  </script>
+
+    let block = blocks[currentBlock];
+
+    if(currentItem >= block.items.length){
+
+        currentBlock++;
+        currentItem=0;
+
+        showItem();
+        return;
+    }
+
+    document.getElementById("left").innerText =
+        "E : " + block.left;
+
+    document.getElementById("right").innerText =
+        "I : " + block.right;
+
+    document.getElementById("message").innerText="";
+
+    let item = block.items[currentItem];
+
+    document.getElementById("stimulus").innerText =
+        item.text;
+
+    startTime = performance.now();
+}
+
+document.addEventListener("keydown",function(event){
+
+    if(currentBlock >= blocks.length) return;
+
+    let item =
+    blocks[currentBlock].items[currentItem];
+
+    let response = "";
+
+    if(event.key==="e")
+        response="left";
+
+    if(event.key==="i")
+        response="right";
+
+    if(response==="") return;
+
+    let reactionTime =
+    performance.now()-startTime;
+
+    let correct =
+    (response===item.correct);
+
+    results.push({
+        block:blocks[currentBlock].name,
+        stimulus:item.text,
+        response:response,
+        correct:correct,
+        reactionTime:
+        Math.round(reactionTime)
+    });
+
+    if(correct){
+
+        currentItem++;
+        showItem();
+
+    }else{
+
+        document.getElementById("message")
+        .innerText="오답!";
+
+    }
+
+});
+
+function finishExperiment(){
+
+    document.getElementById("stimulus")
+    .innerHTML="<h2>실험 종료</h2>";
+
+    document.getElementById("left").innerText="";
+    document.getElementById("right").innerText="";
+
+    let csv =
+    "block,stimulus,response,correct,reactionTime\n";
+
+    results.forEach(r=>{
+        csv +=
+        `${r.block},${r.stimulus},${r.response},${r.correct},${r.reactionTime}\n`;
+    });
+
+    let blob =
+    new Blob([csv], {type:"text/csv"});
+
+    let url =
+    URL.createObjectURL(blob);
+
+    let a =
+    document.createElement("a");
+
+    a.href=url;
+    a.download="results.csv";
+    a.innerText="결과 다운로드";
+
+    document.body.appendChild(a);
+}
+
+</script>
+
 </body>
 </html>
