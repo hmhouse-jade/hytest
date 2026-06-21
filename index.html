@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Mini App</title>
+</head>
+<body style="text-align:center; font-family:sans-serif; margin-top:50px;">
+  <h2>간단 프로그램</h2>
+  <button onclick="run()">클릭!</button>
+  <p id="out"></p>
+
+  <script>
+    function run() {
+      document.getElementById("out").innerText =
+        "실행 완료! 시간: " + new Date().toLocaleTimeString();
+    }
+  </script>
+</body>
+</html>
