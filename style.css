@@ -1,0 +1,20 @@
+body{
+margin:0;
+padding:0;
+background:#f4f4f4;
+font-family: Arial,sans-serif;
+text-align:center;
+}
+
+.screen{
+display:none;
+padding:20px;
+min-height:100vh;
+box-sizing:border-box;
+}
+
+.active{
+display:block;
+}
+
+/* 이하 전부 그대로 복붙 */
