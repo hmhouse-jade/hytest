@@ -22,3 +22,10 @@ document.getElementById("startBtn").addEventListener("click",()=>{
 document.getElementById("noticeBtn").addEventListener("click",()=>{
   showScreen("instructionScreen");
 });
+
+
+console.log("JS 실행됨");
+
+const div = document.createElement("h1");
+div.innerText = "실험 시작";
+document.body.appendChild(div);
