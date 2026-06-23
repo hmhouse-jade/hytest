@@ -19,7 +19,7 @@ export const practiceBlock = {
 
 export function createBlocks(){
 
-// ✅ block1
+/*// ✅ block1
   let allTrials = [];
 
   positiveWords.forEach(word => {
@@ -61,8 +61,54 @@ export function createBlocks(){
   });
 
   shuffle(allTrials2);
-  let block2Trials = allTrials2.slice(0, 10);
+  let block2Trials = allTrials2.slice(0, 10);*/
+  let positivePool = [];
+  let negativePool = [];
 
+  positiveWords.forEach(word => {
+   positivePool.push({type: "text",content: word,correct: "left"});
+   });
+  positiveImages.forEach(img => {
+    positivePool.push({type: "image",content: img,correct: "left"});
+  });
+  negativeWords.forEach(word => {
+    negativePool.push({type: "text",content: word,correct: "right"});
+   });
+  negativeImages.forEach(img => {
+    negativePool.push({type: "image",content: img, correct: "right"});
+   });
+
+  shuffle(positivePool);
+  shuffle(negativePool);
+
+  let selectedPositive = positivePool.slice(0, 10);  // ✅ 10개
+  let selectedNegative = negativePool.slice(0, 10);  // ✅ 10개
+  let block1Trials = selectedPositive.concat(selectedNegative);
+
+  shuffle(block1Trials);
+
+  let positivePool2 = [];
+  let negativePool2 = [];
+  positiveWords.forEach(word => {
+   positivePool2.push({type: "text",content: word,correct: "right"});
+   });
+  positiveImages.forEach(img => {
+    positivePool2.push({type: "image",content: img,correct: "right"});
+  });
+  negativeWords.forEach(word => {
+    negativePool2.push({type: "text",content: word,correct: "left"});
+   });
+  negativeImages.forEach(img => {
+    negativePool2.push({type: "image",content: img, correct: "left"});
+   });
+ 
+
+  shuffle(positivePool2);
+  shuffle(negativePool2);
+
+let block2Trials = positivePool2.slice(0, 10).concat(negativePool2.slice(0, 10));
+
+shuffle(block2Trials);
 
   return [
     practiceBlock,
