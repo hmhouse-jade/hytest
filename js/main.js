@@ -1,5 +1,5 @@
 
-import { createBlocks } from "./experiment.js";
+import { createBlocks } from "./js/experiment.js";
 import {
   showScreen,
   showStimulus,
