@@ -1,12 +1,12 @@
 
-import { createBlocks } from "./js/experiment.js";
+import { createBlocks } from "./experiment.js";
 import {
   showScreen,
   showStimulus,
   updateCategory,
   showFixation,
   clearMessage
-} from "./js/ui.js";
+} from "./ui.js";
 
 /* ==========================
    상태 변수
