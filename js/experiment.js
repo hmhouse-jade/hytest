@@ -19,8 +19,19 @@ export const practiceBlock = {
 
 export function createBlocks(){
 
-  const block1 = [];
-  const block2 = [];
+  //const block1 = [];
+  //const block2 = [];
+  
+  const block1Trials = [];
+  const block2Trials = [];
+
+  shuffle(block1Trials);
+  shuffle(block2Trials);
+
+  
+  block1Trials = block1Trials.slice(0, 5);
+  block2Trials = block2Trials.slice(0, 5);
+
 
   positiveWords.forEach(w=>{
     block1.push({type:"text",content:w,correct:"left"});
@@ -48,13 +59,14 @@ export function createBlocks(){
       name:"본실험 1",
       leftLabel:"긍정",
       rightLabel:"부정",
-      trials: shuffle(block1)
+      trials: block1Trials
+      
     },
     {
       name:"본실험 2",
       leftLabel:"부정",
       rightLabel:"긍정",
-      trials: shuffle(block2)
+      trials: block2Trials
     }
   ];
 }
