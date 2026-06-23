@@ -29,7 +29,7 @@ let errorCount = 0;
 /* ==========================
    시작 버튼
 ========================== */
-
+/*
 document.addEventListener("DOMContentLoaded", function() {
   document.getElementById("startBtn").addEventListener("click", function() {
 
@@ -42,12 +42,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     showScreen("noticeScreen");
   });
-});
+});*/
 
-/*
+
 document.getElementById("startBtn").addEventListener("click", function() {
 
-  let participantID = document.getElementById("participantID").value;
+  participantID = document.getElementById("participantID").value;
 
     if (!participantID) {
       alert("참가자 번호를 입력해주세요.");
@@ -57,7 +57,7 @@ document.getElementById("startBtn").addEventListener("click", function() {
   showScreen("noticeScreen");
 });
 
-
+/*
 document.getElementById("startBtn").onclick = () => {
 
   participantID = document.getElementById("participantID").value;
