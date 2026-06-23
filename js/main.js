@@ -29,7 +29,7 @@ let errorCount = 0;
 /* ==========================
    시작 버튼
 ========================== */
-
+/*
 document.addEventListener("DOMContentLoaded", function() {
   document.getElementById("startBtn").addEventListener("click", function() {
 
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     showScreen("noticeScreen");
   });
-});
+});*/
 
 /*
 document.getElementById("startBtn").addEventListener("click", function() {
@@ -57,7 +57,7 @@ document.getElementById("startBtn").addEventListener("click", function() {
   showScreen("noticeScreen");
 });
 
-/*
+
 document.getElementById("startBtn").onclick = () => {
 
   participantID = document.getElementById("participantID").value;
@@ -67,7 +67,7 @@ document.getElementById("startBtn").onclick = () => {
     }
 
   showScreen("noticeScreen");
-}*/
+}
 
 
 /* ==========================
