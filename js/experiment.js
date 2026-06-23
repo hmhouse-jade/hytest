@@ -1,5 +1,5 @@
-import {positiveWords, negativeWords, positiveImages, negativeImages} from "./data.js";
-import {shuffle} from "./utils.js";
+import {positiveWords, negativeWords, positiveImages, negativeImages} from "./js/data.js";
+import {shuffle} from "./js/utils.js";
 
 export const practiceBlock = {
   name:"연습",
