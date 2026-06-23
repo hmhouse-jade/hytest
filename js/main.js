@@ -58,12 +58,9 @@ document.getElementById("startBtn").addEventListener("click", function() {
 });
 
 
-let participantID = "";*/
-
 document.getElementById("startBtn").onclick = () => {
 
   participantID = document.getElementById("participantID").value;
-  // ✅ let 제거!!!
       if (!participantID) {
       alert("참가자 번호를 입력해주세요.");
       return;
