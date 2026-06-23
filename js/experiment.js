@@ -34,23 +34,23 @@ export function createBlocks(){
 
 
   positiveWords.forEach(w=>{
-    block1.push({type:"text",content:w,correct:"left"});
-    block2.push({type:"text",content:w,correct:"right"});
+    block1Trials.push({type:"text",content:w,correct:"left"});
+    block2Trials.push({type:"text",content:w,correct:"right"});
   });
 
   negativeWords.forEach(w=>{
-    block1.push({type:"text",content:w,correct:"right"});
-    block2.push({type:"text",content:w,correct:"left"});
+    block1Trials.push({type:"text",content:w,correct:"right"});
+    block2Trials.push({type:"text",content:w,correct:"left"});
   });
 
   positiveImages.forEach(img=>{
-    block1.push({type:"image",content:img,correct:"left"});
-    block2.push({type:"image",content:img,correct:"right"});
+    block1Trials.push({type:"image",content:img,correct:"left"});
+    block2Trials.push({type:"image",content:img,correct:"right"});
   });
 
   negativeImages.forEach(img=>{
-    block1.push({type:"image",content:img,correct:"right"});
-    block2.push({type:"image",content:img,correct:"left"});
+    block1Trials.push({type:"image",content:img,correct:"right"});
+    block2Trials.push({type:"image",content:img,correct:"left"});
   });
 
   return [
