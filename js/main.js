@@ -6,7 +6,7 @@ import {
   updateCategory,
   showFixation,
   clearMessage
-} from "./ui.js";
+} from "./js/ui.js";
 
 /* ==========================
    상태 변수
