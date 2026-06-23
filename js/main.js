@@ -42,12 +42,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     showScreen("noticeScreen");
   });
-});*/
+});
 
 
 document.getElementById("startBtn").addEventListener("click", function() {
 
-  participantID = document.getElementById("participantID").value;
+  let participantID = document.getElementById("participantID").value;
 
     if (!participantID) {
       alert("참가자 번호를 입력해주세요.");
@@ -55,9 +55,9 @@ document.getElementById("startBtn").addEventListener("click", function() {
     }
 
   showScreen("noticeScreen");
-});
+});*/
 
-/*
+
 document.getElementById("startBtn").onclick = () => {
 
   participantID = document.getElementById("participantID").value;
@@ -67,7 +67,7 @@ document.getElementById("startBtn").onclick = () => {
     }
 
   showScreen("noticeScreen");
-}*/
+}
 
 
 /* ==========================
