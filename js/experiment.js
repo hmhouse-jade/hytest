@@ -19,39 +19,50 @@ export const practiceBlock = {
 
 export function createBlocks(){
 
-  //const block1 = [];
-  //const block2 = [];
-  
-  let block1Trials = [];
-  let block2Trials = [];
+// ✅ block1
+  let allTrials = [];
 
-  shuffle(block1Trials);
-  shuffle(block2Trials);
-
-  
-  block1Trials = block1Trials.slice(0, 5);
-  block2Trials = block2Trials.slice(0, 5);
-
-
-  positiveWords.forEach(w=>{
-    block1Trials.push({type:"text",content:w,correct:"left"});
-    block2Trials.push({type:"text",content:w,correct:"right"});
+  positiveWords.forEach(word => {
+    allTrials.push({type:"text", content:word, correct:"left"});
   });
 
-  negativeWords.forEach(w=>{
-    block1Trials.push({type:"text",content:w,correct:"right"});
-    block2Trials.push({type:"text",content:w,correct:"left"});
+  negativeWords.forEach(word => {
+    allTrials.push({type:"text", content:word, correct:"right"});
   });
 
-  positiveImages.forEach(img=>{
-    block1Trials.push({type:"image",content:img,correct:"left"});
-    block2Trials.push({type:"image",content:img,correct:"right"});
+  positiveImages.forEach(img => {
+    allTrials.push({type:"image", content:img, correct:"left"});
   });
 
-  negativeImages.forEach(img=>{
-    block1Trials.push({type:"image",content:img,correct:"right"});
-    block2Trials.push({type:"image",content:img,correct:"left"});
+  negativeImages.forEach(img => {
+    allTrials.push({type:"image", content:img, correct:"right"});
   });
+
+  shuffle(allTrials);
+  let block1Trials = allTrials.slice(0, 10);
+
+  // ✅ block2
+  let allTrials2 = [];
+
+  positiveWords.forEach(word => {
+    allTrials2.push({type:"text", content:word, correct:"right"});
+  });
+
+  negativeWords.forEach(word => {
+    allTrials2.push({type:"text", content:word, correct:"left"});
+  });
+
+  positiveImages.forEach(img => {
+    allTrials2.push({type:"image", content:img, correct:"right"});
+  });
+
+  negativeImages.forEach(img => {
+    allTrials2.push({type:"image", content:img, correct:"left"});
+  });
+
+  shuffle(allTrials2);
+  let block2Trials = allTrials2.slice(0, 10);
+
 
   return [
     practiceBlock,
