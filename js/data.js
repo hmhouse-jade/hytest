@@ -20,10 +20,10 @@ export const negativeWords1 = [
 ];
 
 
-export const positiveImages1 = Array.from({length:10},(_,i)=>
+export const positiveImages1= Array.from({length:10},(_,i)=>
   `images/happy${i+1}.png`
 );
 
-export const negativeImages1 = Array.from({length:9},(_,i)=>
+export const negativeImages = Array.from({length:9},(_,i)=>
   `images/sad${i+1}.png`
 );
