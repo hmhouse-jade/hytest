@@ -22,8 +22,8 @@ export function createBlocks(){
   //const block1 = [];
   //const block2 = [];
   
-  const block1Trials = [];
-  const block2Trials = [];
+  let block1Trials = [];
+  let block2Trials = [];
 
   shuffle(block1Trials);
   shuffle(block2Trials);
